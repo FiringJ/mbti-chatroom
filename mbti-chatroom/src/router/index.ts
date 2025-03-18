@@ -8,11 +8,6 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: ChatRoomView
-    },
-    {
-      path: '/chatroom',
-      name: 'chatroom',
-      component: ChatRoomView
     }
   ]
 })

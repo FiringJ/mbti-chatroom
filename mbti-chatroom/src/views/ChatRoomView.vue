@@ -1,7 +1,7 @@
 <template>
   <div class="chat-room-page">
     <div class="chat-room-container">
-      <ChatHeader title="MBTI聊天" />
+      <!-- <ChatHeader title="MBTI聊天" /> -->
       <ChatRoom />
     </div>
   </div>

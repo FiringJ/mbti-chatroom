@@ -46,7 +46,7 @@
             </div>
             <div class="message-bubble" :class="{ 'revoked': message.status === 'revoked' }"
               :style="{ background: getMbtiConfig(message.mbtiType).bubbleGradient }">
-              <p v-html="formatMessageContent(message.content, message.mentions)"></p>
+              <p v-html="message.content"></p>
 
               <!-- 消息附件 -->
               <div v-if="message.attachments && message.attachments.length > 0"
@@ -189,20 +189,6 @@ const switchConversation = () => {
       chatBody.scrollTop = 0
     }
   }, 0)
-}
-
-// 高亮@消息提及
-const formatMessageContent = (content: string, mentions?: string[]) => {
-  if (!mentions || mentions.length === 0) return content
-
-  let formattedContent = content
-  for (const mention of mentions) {
-    formattedContent = formattedContent.replace(
-      new RegExp(`@${mention}`, 'g'),
-      `<span class="user-mention">@${mention}</span><br/>`
-    )
-  }
-  return formattedContent
 }
 
 const newMessage = ref('')

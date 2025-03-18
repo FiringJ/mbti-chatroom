@@ -29,7 +29,7 @@ export const teamBuildingConversation: Conversation = {
     {
       id: 1,
       mbtiType: 'ENTJ',
-      content: '凌晨1点发工作文档？@所有人 下周团建方案投票，3分钟内给我结果。',
+      content: '凌晨1点发工作文档？<br/><span class="user-mention">@所有人</span> 下周团建方案投票，3分钟内给我结果。',
       time: '01:03',
       mentions: ['所有人']
     },
@@ -49,7 +49,7 @@ export const teamBuildingConversation: Conversation = {
     {
       id: 3,
       mbtiType: 'ESTP',
-      content: '@ENTJ 不如去冲浪！我刚买了摩托艇，浪越大鱼越贵！',
+      content: '<span class="user-mention">@ENTJ</span> 不如去冲浪！我刚买了摩托艇，浪越大鱼越贵！',
       time: '01:06',
       attachments: [
         {
@@ -82,7 +82,7 @@ export const teamBuildingConversation: Conversation = {
     {
       id: 6,
       mbtiType: 'ENTJ',
-      content: '@ESTP 摩托艇能开发票吗？@INTJ 你统计下中暑概率。@ESFJ 西瓜钱走报销。',
+      content: '<span class="user-mention">@ESTP</span> 摩托艇能开发票吗？<br/><span class="user-mention">@INTJ</span> 你统计下中暑概率。<br/><span class="user-mention">@ESFJ</span> 西瓜钱走报销。',
       time: '01:12',
       mentions: ['ESTP', 'INTJ', 'ESFJ']
     },
@@ -96,7 +96,7 @@ export const teamBuildingConversation: Conversation = {
     {
       id: 8,
       mbtiType: 'ESTP',
-      content: '@INFP 尊嘟假嘟？带我一个！我知道有个瀑布能裸泳🌊',
+      content: '<span class="user-mention">@INFP</span> 尊嘟假嘟？带我一个！我知道有个瀑布能裸泳🌊',
       time: '01:16',
       status: 'banned',
       banTime: '1分钟',
@@ -105,7 +105,7 @@ export const teamBuildingConversation: Conversation = {
     {
       id: 9,
       mbtiType: 'INTJ',
-      content: '@INFP 最新研究：当野人WiFi覆盖率为0，你确定吗？',
+      content: '<span class="user-mention">@INFP</span> 最新研究：当野人WiFi覆盖率为0，你确定吗？',
       time: '01:18',
       attachments: [
         {
@@ -119,7 +119,7 @@ export const teamBuildingConversation: Conversation = {
     {
       id: 10,
       mbtiType: 'ESFJ',
-      content: '@INFP 宝，我陪你周末去公园喂鸽子吧😊',
+      content: '<span class="user-mention">@INFP</span> 宝，我陪你周末去公园喂鸽子吧😊',
       time: '01:20',
       attachments: [
         {
