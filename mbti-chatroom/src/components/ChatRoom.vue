@@ -3,198 +3,74 @@
     <!-- 聊天室标题栏 -->
     <div class="chat-header">
       <div class="back-button">
-        <img src="https://unpkg.com/lucide-static@latest/icons/chevron-left.svg" class="icon" alt="Back">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
       </div>
       <div class="room-info">
-        <h2 class="room-title">公司团队群聊</h2>
+        <h2 class="room-title">{{ currentConversation.title }}</h2>
         <p class="room-members">16位成员在线</p>
       </div>
       <div class="header-actions">
-        <img src="https://unpkg.com/lucide-static@latest/icons/info.svg" class="icon" alt="Info">
-        <img src="https://unpkg.com/lucide-static@latest/icons/more-vertical.svg" class="icon" alt="More">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M12 16v-4"></path>
+          <path d="M12 8h.01"></path>
+        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+          @click="switchConversation" class="icon">
+          <circle cx="12" cy="12" r="1"></circle>
+          <circle cx="12" cy="5" r="1"></circle>
+          <circle cx="12" cy="19" r="1"></circle>
+        </svg>
       </div>
     </div>
 
     <!-- 聊天内容区域 -->
     <div class="chat-body">
-      <!-- ENTJ消息 -->
-      <div class="message-wrapper">
+      <!-- 消息循环 -->
+      <div v-for="message in currentConversation.messages" :key="message.id" class="message-wrapper">
         <div class="message-container">
-          <img :src="getAvatarImage('ENTJ')" class="user-avatar" alt="ENTJ">
+          <MbtiAvatar :mbti-type="message.mbtiType" />
           <div class="message-content-wrapper">
             <div class="message-header">
-              <p class="user-name entj-name">ENTJ <span class="mbti-emoji">{{ getEmoji('ENTJ') }}</span></p>
-              <span class="message-time">01:03</span>
+              <p class="user-name" :style="{ color: getMbtiConfig(message.mbtiType).nameColor }">
+                {{ message.mbtiType }} <span class="mbti-emoji">{{ getMbtiConfig(message.mbtiType).emoji }}</span>
+              </p>
+              <span class="message-time">{{ message.time }}</span>
+              <span v-if="message.status === 'revoked'" class="message-status">已撤回</span>
+              <span v-if="message.status === 'banned'" class="banned-status">禁言{{ message.banTime }}</span>
             </div>
-            <div class="message-bubble entj-bubble">
-              <p>凌晨1点发工作文档？<span class="user-mention">@所有人</span> 下周团建方案投票，3分钟内给我结果。</p>
-            </div>
-          </div>
-        </div>
-      </div>
+            <div class="message-bubble" :class="{ 'revoked': message.status === 'revoked' }"
+              :style="{ background: getMbtiConfig(message.mbtiType).bubbleGradient }">
+              <p v-html="formatMessageContent(message.content, message.mentions)"></p>
 
-      <!-- INFP消息 -->
-      <div class="message-wrapper">
-        <div class="message-container">
-          <img :src="getAvatarImage('INFP')" class="user-avatar" alt="INFP">
-          <div class="message-content-wrapper">
-            <div class="message-header">
-              <p class="user-name infp-name">INFP <span class="mbti-emoji">{{ getEmoji('INFP') }}</span></p>
-              <span class="message-time">01:05</span>
-            </div>
-            <div class="message-bubble infp-bubble">
-              <p>…可是今天42度欸🥵 人类真的需要团建吗？</p>
-              <div class="attachment">
-                <img src="https://unpkg.com/lucide-static@latest/icons/music.svg" class="attachment-icon" alt="Music">
-                <span class="attachment-text">分享歌曲《逃离地球》</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- ESTP消息 -->
-      <div class="message-wrapper">
-        <div class="message-container">
-          <img :src="getAvatarImage('ESTP')" class="user-avatar" alt="ESTP">
-          <div class="message-content-wrapper">
-            <div class="message-header">
-              <p class="user-name estp-name">ESTP <span class="mbti-emoji">{{ getEmoji('ESTP') }}</span></p>
-              <span class="message-time">01:06</span>
-            </div>
-            <div class="message-bubble estp-bubble">
-              <p><span class="user-mention">@ENTJ</span> 不如去冲浪！我刚买了摩托艇，浪越大鱼越贵！</p>
-              <div class="attachment">
-                <img src="https://unpkg.com/lucide-static@latest/icons/map-pin.svg" class="attachment-icon"
-                  alt="Location">
-                <span class="attachment-text">三亚后海</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- INTJ消息 -->
-      <div class="message-wrapper">
-        <div class="message-container">
-          <img :src="getAvatarImage('INTJ')" class="user-avatar" alt="INTJ">
-          <div class="message-content-wrapper">
-            <div class="message-header">
-              <p class="user-name intj-name">INTJ <span class="mbti-emoji">{{ getEmoji('INTJ') }}</span></p>
-              <span class="message-time">01:08</span>
-            </div>
-            <div class="message-bubble intj-bubble">
-              <p>高温天团建=降低团队效率47.3%，建议改线上。</p>
-              <div class="attachment">
-                <img src="https://unpkg.com/lucide-static@latest/icons/file-text.svg" class="attachment-icon" alt="PDF">
-                <span class="attachment-text">附《空调房生存指南》.pdf</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- ESFJ消息 -->
-      <div class="message-wrapper">
-        <div class="message-container">
-          <img :src="getAvatarImage('ESFJ')" class="user-avatar" alt="ESFJ">
-          <div class="message-content-wrapper">
-            <div class="message-header">
-              <p class="user-name esfj-name">ESFJ <span class="mbti-emoji">{{ getEmoji('ESFJ') }}</span></p>
-              <span class="message-time">01:10</span>
-            </div>
-            <div class="message-bubble esfj-bubble">
-              <p>大家辛苦啦！我买了冰镇西瓜🍉和藿香正气水🥤，明天放公司冰箱~</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- ENTJ回复 -->
-      <div class="message-wrapper">
-        <div class="message-container">
-          <img :src="getAvatarImage('ENTJ')" class="user-avatar" alt="ENTJ">
-          <div class="message-content-wrapper">
-            <div class="message-header">
-              <p class="user-name entj-name">ENTJ <span class="mbti-emoji">{{ getEmoji('ENTJ') }}</span></p>
-              <span class="message-time">01:12</span>
-            </div>
-            <div class="message-bubble entj-bubble">
-              <p><span class="user-mention">@ESTP</span> 摩托艇能开发票吗？<span class="user-mention">@INTJ</span> 你统计下中暑概率。<span
-                  class="user-mention">@ESFJ</span> 西瓜钱走报销。</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- INFP回复(已撤回) -->
-      <div class="message-wrapper">
-        <div class="message-container">
-          <img :src="getAvatarImage('INFP')" class="user-avatar" alt="INFP">
-          <div class="message-content-wrapper">
-            <div class="message-header">
-              <p class="user-name infp-name">INFP <span class="mbti-emoji">{{ getEmoji('INFP') }}</span></p>
-              <span class="message-time">01:15</span>
-              <span class="message-status">已撤回</span>
-            </div>
-            <div class="message-bubble infp-bubble revoked">
-              <p>（突然发疯）我要去山里当野人！和松鼠讨论存在主义！！</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- ESTP回复(被禁言) -->
-      <div class="message-wrapper">
-        <div class="message-container">
-          <img :src="getAvatarImage('ESTP')" class="user-avatar" alt="ESTP">
-          <div class="message-content-wrapper">
-            <div class="message-header">
-              <p class="user-name estp-name">ESTP <span class="mbti-emoji">{{ getEmoji('ESTP') }}</span></p>
-              <span class="message-time">01:16</span>
-              <span class="banned-status">禁言1分钟</span>
-            </div>
-            <div class="message-bubble estp-bubble">
-              <p><span class="user-mention">@INFP</span> 尊嘟假嘟？带我一个！我知道有个瀑布能裸泳🌊</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- INTJ回复 -->
-      <div class="message-wrapper">
-        <div class="message-container">
-          <img :src="getAvatarImage('INTJ')" class="user-avatar" alt="INTJ">
-          <div class="message-content-wrapper">
-            <div class="message-header">
-              <p class="user-name intj-name">INTJ <span class="mbti-emoji">{{ getEmoji('INTJ') }}</span></p>
-              <span class="message-time">01:18</span>
-            </div>
-            <div class="message-bubble intj-bubble">
-              <p><span class="user-mention">@INFP</span> 最新研究：当野人WiFi覆盖率为0，你确定吗？</p>
-              <div class="attachment">
-                <img src="https://unpkg.com/lucide-static@latest/icons/link.svg" class="attachment-icon" alt="Link">
-                <span class="attachment-text">《5G基站分布图》</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- ESFJ回复 -->
-      <div class="message-wrapper">
-        <div class="message-container">
-          <img :src="getAvatarImage('ESFJ')" class="user-avatar" alt="ESFJ">
-          <div class="message-content-wrapper">
-            <div class="message-header">
-              <p class="user-name esfj-name">ESFJ <span class="mbti-emoji">{{ getEmoji('ESFJ') }}</span></p>
-              <span class="message-time">01:20</span>
-            </div>
-            <div class="message-bubble esfj-bubble">
-              <p><span class="user-mention">@INFP</span> 宝，我陪你周末去公园喂鸽子吧😊</p>
-              <div class="attachment">
-                <img src="https://unpkg.com/lucide-static@latest/icons/image.svg" class="attachment-icon" alt="Sticker">
-                <span class="attachment-text">发送摸摸头表情包</span>
+              <!-- 消息附件 -->
+              <div v-if="message.attachments && message.attachments.length > 0"
+                v-for="attachment in message.attachments" :key="attachment.text" class="attachment">
+                <svg :class="['attachment-icon', attachment.icon]" xmlns="http://www.w3.org/2000/svg" width="16"
+                  height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path v-if="attachment.icon === 'music'" d="M9 18V5l12-2v13"></path>
+                  <path v-if="attachment.icon === 'music'" d="M6 15.5a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"></path>
+                  <path v-if="attachment.icon === 'music'" d="M18 15.5a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"></path>
+                  <path v-if="attachment.icon === 'map-pin'" d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                  <circle v-if="attachment.icon === 'map-pin'" cx="12" cy="10" r="3"></circle>
+                  <path v-if="attachment.icon === 'file'"
+                    d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
+                  <polyline v-if="attachment.icon === 'file'" points="13 2 13 9 20 9"></polyline>
+                  <path v-if="attachment.icon === 'link'"
+                    d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                  <path v-if="attachment.icon === 'link'"
+                    d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                  <rect v-if="attachment.icon === 'image'" x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                  <circle v-if="attachment.icon === 'image'" cx="8.5" cy="8.5" r="1.5"></circle>
+                  <polyline v-if="attachment.icon === 'image'" points="21 15 16 10 5 21"></polyline>
+                </svg>
+                <span class="attachment-text">{{ attachment.text }}</span>
               </div>
             </div>
           </div>
@@ -205,16 +81,42 @@
     <!-- 底部输入区域 -->
     <div class="chat-footer">
       <div class="input-tools">
-        <img src="https://unpkg.com/lucide-static@latest/icons/plus-circle.svg" class="tool-icon" alt="Add">
-        <img src="https://unpkg.com/lucide-static@latest/icons/image.svg" class="tool-icon" alt="Image">
-        <img src="https://unpkg.com/lucide-static@latest/icons/mic.svg" class="tool-icon" alt="Voice">
-        <img src="https://unpkg.com/lucide-static@latest/icons/smile.svg" class="tool-icon" alt="Emoji">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tool-icon">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="16"></line>
+          <line x1="8" y1="12" x2="16" y2="12"></line>
+        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tool-icon">
+          <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+          <circle cx="8.5" cy="8.5" r="1.5"></circle>
+          <polyline points="21 15 16 10 5 21"></polyline>
+        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tool-icon">
+          <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+          <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+          <line x1="12" y1="19" x2="12" y2="23"></line>
+          <line x1="8" y1="23" x2="16" y2="23"></line>
+        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tool-icon">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
+          <line x1="9" y1="9" x2="9.01" y2="9"></line>
+          <line x1="15" y1="9" x2="15.01" y2="9"></line>
+        </svg>
       </div>
       <div class="input-area">
         <input type="text" class="message-input" placeholder="发送消息..." v-model="newMessage"
           @keyup.enter="sendMessage" />
         <button class="send-button" @click="sendMessage">
-          <img src="https://unpkg.com/lucide-static@latest/icons/send.svg" class="send-icon" alt="Send">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="send-icon">
+            <line x1="22" y1="2" x2="11" y2="13"></line>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+          </svg>
         </button>
       </div>
     </div>
@@ -222,7 +124,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
+import MbtiAvatar from './MbtiAvatar.vue'
+import { allConversations } from '@/constants/chatData'
+import { getMbtiConfig } from '@/constants/mbtiTypes'
 
 // MBTI类型对应的表情
 const mbtiEmojis: Record<string, string> = {
@@ -259,6 +164,45 @@ const getAvatarImage = (mbtiType: string) => {
     'ESFJ': 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3',
   }
   return avatarMap[mbtiType] || 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3'
+}
+
+// 当前聊天页
+const currentConversationId = ref('team-building')
+
+// 当前聊天内容
+const currentConversation = computed(() => {
+  return allConversations[currentConversationId.value]
+})
+
+// 切换会话
+const switchConversation = () => {
+  // 循环切换对话
+  const conversationIds = Object.keys(allConversations)
+  const currentIndex = conversationIds.indexOf(currentConversationId.value)
+  const nextIndex = (currentIndex + 1) % conversationIds.length
+  currentConversationId.value = conversationIds[nextIndex]
+
+  // 滚动到顶部
+  setTimeout(() => {
+    const chatBody = document.querySelector('.chat-body')
+    if (chatBody) {
+      chatBody.scrollTop = 0
+    }
+  }, 0)
+}
+
+// 高亮@消息提及
+const formatMessageContent = (content: string, mentions?: string[]) => {
+  if (!mentions || mentions.length === 0) return content
+
+  let formattedContent = content
+  for (const mention of mentions) {
+    formattedContent = formattedContent.replace(
+      new RegExp(`@${mention}`, 'g'),
+      `<span class="user-mention">@${mention}</span><br/>`
+    )
+  }
+  return formattedContent
 }
 
 const newMessage = ref('')
@@ -314,11 +258,11 @@ const sendMessage = () => {
 
 .room-title {
   font-weight: 500;
-  font-size: 16px;
+  font-size: 18px;
 }
 
 .room-members {
-  font-size: 12px;
+  font-size: 13px;
   color: #f3ebfc;
 }
 
@@ -341,6 +285,16 @@ const sendMessage = () => {
   background-color: #f8f8fc;
   display: flex;
   flex-direction: column;
+  /* 隐藏滚动条 */
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE/Edge */
+}
+
+/* 隐藏Chrome/Safari滚动条 */
+.chat-body::-webkit-scrollbar {
+  display: none;
 }
 
 .message-wrapper {
@@ -425,12 +379,12 @@ const sendMessage = () => {
 }
 
 .message-bubble {
-  padding: 8px 12px;
+  padding: 10px 14px;
   border-radius: 12px;
   border-top-left-radius: 0;
   max-width: 85%;
   color: white;
-  font-size: 14px;
+  font-size: 15px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   margin-top: 4px;
   animation: fadeIn 0.3s ease;
@@ -462,7 +416,11 @@ const sendMessage = () => {
 
 .user-mention {
   color: #facc15;
-  font-weight: 600;
+  font-weight: 700;
+  display: inline-block;
+  padding: 0 2px;
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
 }
 
 .attachment {
@@ -478,6 +436,7 @@ const sendMessage = () => {
   width: 16px;
   height: 16px;
   margin-right: 8px;
+  filter: invert(100%);
 }
 
 .attachment-text {
@@ -488,35 +447,45 @@ const sendMessage = () => {
 .chat-footer {
   background-color: white;
   border-top: 1px solid #e2e8f0;
-  padding: 10px 12px;
+  padding: 10px 16px 16px 16px;
+  position: sticky;
+  bottom: 0;
 }
 
 .input-tools {
   display: flex;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
 }
 
 .tool-icon {
   width: 24px;
   height: 24px;
-  margin-right: 10px;
+  margin-right: 16px;
   color: #718096;
   cursor: pointer;
+  transition: color 0.2s;
+}
+
+.tool-icon:hover {
+  color: #4a5568;
 }
 
 .input-area {
   display: flex;
   align-items: center;
+  background-color: #f1f1f4;
+  border-radius: 24px;
+  padding: 4px 8px 4px 16px;
 }
 
 .message-input {
   flex: 1;
-  padding: 8px 16px;
+  padding: 10px 0;
   border: none;
   border-radius: 99px;
   outline: none;
-  background-color: #f1f1f4;
-  font-size: 14px;
+  background-color: transparent;
+  font-size: 15px;
 }
 
 .send-button {
@@ -525,7 +494,7 @@ const sendMessage = () => {
   border-radius: 50%;
   background-color: #9f7aea;
   border: none;
-  margin-left: 10px;
+  margin-left: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -538,8 +507,6 @@ const sendMessage = () => {
 }
 
 .send-icon {
-  width: 20px;
-  height: 20px;
   color: white;
 }
 
@@ -553,5 +520,10 @@ const sendMessage = () => {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* 深化绿色 */
+.green-bg {
+  background: linear-gradient(135deg, #276749, #48bb78);
 }
 </style>

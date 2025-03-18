@@ -16,5 +16,6 @@ import { RouterView } from 'vue-router'
 
 body {
   background-color: #e9f7a9;
+  position: relative;
 }
 </style>
