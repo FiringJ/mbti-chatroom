@@ -79,7 +79,7 @@
     </div>
 
     <!-- 底部输入区域 -->
-    <div class="chat-footer">
+    <!-- <div class="chat-footer">
       <div class="input-tools">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tool-icon">
@@ -119,7 +119,7 @@
           </svg>
         </button>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -224,7 +224,7 @@ const sendMessage = () => {
 .chat-header {
   background-color: #9f7aea;
   color: white;
-  padding: 12px 15px;
+  padding: 6px 10px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -398,15 +398,6 @@ const sendMessage = () => {
 
 .revoked {
   opacity: 0.7;
-}
-
-.user-mention {
-  color: #facc15;
-  font-weight: 700;
-  display: inline-block;
-  padding: 0 2px;
-  background-color: rgba(0, 0, 0, 0.1);
-  border-radius: 4px;
 }
 
 .attachment {

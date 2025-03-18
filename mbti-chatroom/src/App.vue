@@ -15,7 +15,21 @@ import { RouterView } from 'vue-router'
 }
 
 body {
+  margin: 0;
+  padding: 0;
   background-color: #e9f7a9;
   position: relative;
+  overflow: hidden;
+  height: 100vh;
+}
+
+#app {
+  padding: 0;
+  height: 100vh;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  display: flex;
+  justify-content: center;
 }
 </style>
