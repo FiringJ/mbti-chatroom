@@ -131,20 +131,20 @@ import { getMbtiConfig } from '@/constants/mbtiTypes'
 
 // MBTI类型对应的表情
 const mbtiEmojis: Record<string, string> = {
-  'ENTJ': '🛜',
-  'INTJ': '🐺',
+  'ENTJ': '🦁',
+  'INTJ': '🕶️',
   'ENTP': '🔍',
   'INTP': '🔬',
   'INFJ': '🔮',
   'ENFJ': '🌟',
-  'INFP': '🦋',
-  'ENFP': '🎭',
-  'ISTJ': '📊',
+  'INFP': '🦄',
+  'ENFP': '🌈',
+  'ISTJ': '🐜',
   'ESTJ': '⏱️',
   'ISFJ': '🍀',
-  'ESFJ': '🧡',
+  'ESFJ': '🍪',
   'ISTP': '🔧',
-  'ESTP': '🕶️',
+  'ESTP': '🎮',
   'ISFP': '🎨',
   'ESFP': '🎉'
 }

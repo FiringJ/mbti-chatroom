@@ -216,9 +216,95 @@ export const dramaReviewConversation: Conversation = {
   ]
 };
 
+// 创建第四个对话数据：MBTI摆烂互助群
+export const mbtiGroupConversation: Conversation = {
+  id: 'mbti-group',
+  title: '周一请假理由研发中心',
+  messages: [
+    {
+      id: 1,
+      mbtiType: 'ENTJ',
+      content: '（凌晨3点）<span class="user-mention">@所有人</span> 本周KPI冲刺方案V12已发群，重点：<br/><br/>上厕所必须小跑<br/><br/>午睡改用睁眼冥想术',
+      time: '03:00',
+      mentions: ['所有人'],
+      attachments: [
+        {
+          type: 'file',
+          icon: 'file-text',
+          text: '《如何把咖啡因注射到颈动脉》.pdf'
+        }
+      ]
+    },
+    {
+      id: 2,
+      mbtiType: 'INFP',
+      content: '…我的灵魂说它要冬眠到2035年<br/>（妈妈秒回：先把你冰箱里的酸奶盒扔了）',
+      time: '03:05'
+    },
+    {
+      id: 3,
+      mbtiType: 'ESTP',
+      content: '笑死！我刚把辞职信折成纸飞机扔老板脸上',
+      time: '03:10',
+      attachments: [
+        {
+          type: 'link',
+          icon: 'link',
+          text: '《职场刺客の108种死法》'
+        }
+      ]
+    },
+    {
+      id: 4,
+      mbtiType: 'ISTJ',
+      content: '已统计本群本月请假理由：<br/>▫️ 痔疮复发（32次）<br/>▫️ 二舅的狗的绝育手术（15次）<br/>▫️ 被外星人绑架未遂（1次）',
+      time: '03:15'
+    },
+    {
+      id: 5,
+      mbtiType: 'ENTJ',
+      content: '被外星人绑架未遂',
+      time: '03:16',
+      status: 'revoked'
+    },
+    {
+      id: 6,
+      mbtiType: 'ENFP',
+      content: '啊啊啊！我想当流浪画家/奶茶店员/南极科考员…<br/>（同时报名8个培训班并花光工资）',
+      time: '03:20'
+    },
+    {
+      id: 7,
+      mbtiType: 'INTJ',
+      content: '<span class="user-mention">@ENTJ</span> 数据显示你司离职率超过殡仪馆满意度<br/>建议：把工位改装成休眠舱，实现24小时可持续性压榨',
+      time: '03:25',
+      mentions: ['ENTJ']
+    },
+    {
+      id: 8,
+      mbtiType: 'ESFJ',
+      content: '宝们辛苦了！我烤了脑干形状饼干放前台😘<br/>（INFP因过度共情饼干开始写诗）',
+      time: '03:30'
+    },
+    {
+      id: 9,
+      mbtiType: 'ISTP',
+      content: '（突然潜水）通知：<br/>本周团建项目——<br/><br/>凌晨徒步戈壁滩<br/><br/>在钉钉群表演胸口碎大石换年假',
+      time: '03:40'
+    },
+    {
+      id: 10,
+      mbtiType: '全体成员',
+      content: '（头像集体变灰）',
+      time: '03:45'
+    }
+  ]
+};
+
 // 导出所有对话
 export const allConversations: Record<string, Conversation> = {
   'team-building': teamBuildingConversation,
   'be-drama': beDramaConversation,
-  'drama-review': dramaReviewConversation
+  'drama-review': dramaReviewConversation,
+  'mbti-group': mbtiGroupConversation
 }; 
