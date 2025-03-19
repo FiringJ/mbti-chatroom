@@ -41,38 +41,38 @@ export function getMbtiCategory(mbtiType: string): 'green' | 'purple' | 'yellow'
 export const categoryColors: MbtiCategoryColors = {
   green: {
     nameColor: '#276749',
-    bubbleGradient: 'linear-gradient(to right, #38a169, #276749)'
+    bubbleGradient: 'linear-gradient(135deg, #38a169, #276749)'
   },
   purple: {
     nameColor: '#805ad5',
-    bubbleGradient: 'linear-gradient(to right, #9f7aea, #6b46c1)'
+    bubbleGradient: 'linear-gradient(135deg, #9f7aea, #6b46c1)'
   },
   yellow: {
-    nameColor: '#d69e2e',
-    bubbleGradient: 'linear-gradient(to right, #f6ad55, #dd6b20)'
+    nameColor: '#dd6b20',
+    bubbleGradient: 'linear-gradient(135deg, #f6ad55, #dd6b20)'
   },
   blue: {
     nameColor: '#3182ce',
-    bubbleGradient: 'linear-gradient(to right, #63b3ed, #2b6cb0)'
+    bubbleGradient: 'linear-gradient(135deg, #63b3ed, #2b6cb0)'
   }
 };
 
 // MBTI表情符号
 export const mbtiEmojis: Record<string, string> = {
-  'ENTJ': '🛜',
-  'INTJ': '🐺',
+  'ENTJ': '🦁',
+  'INTJ': '🕶️',
   'ENTP': '🔍',
   'INTP': '🔬',
   'INFJ': '🔮',
   'ENFJ': '🌟',
-  'INFP': '🦋',
-  'ENFP': '🎭',
-  'ISTJ': '📊',
+  'INFP': '🦄',
+  'ENFP': '🌈',
+  'ISTJ': '🐜',
   'ESTJ': '⏱️',
   'ISFJ': '🍀',
-  'ESFJ': '🧡',
+  'ESFJ': '🍪',
   'ISTP': '🔧',
-  'ESTP': '🕶️',
+  'ESTP': '🎮',
   'ISFP': '🎨',
   'ESFP': '🎉'
 };

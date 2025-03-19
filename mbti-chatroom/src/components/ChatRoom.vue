@@ -212,54 +212,63 @@ const sendMessage = () => {
 <style scoped>
 .chat-container {
   width: 100%;
-  max-width: 414px;
-  height: 100vh;
+  max-width: 375px;
+  height: 500px;
+  /* 设置3:4比例 (375:500) */
   display: flex;
   flex-direction: column;
   margin: 0 auto;
   background-color: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 }
 
 /* 聊天室标题栏样式 */
 .chat-header {
-  background-color: #9f7aea;
+  background: linear-gradient(135deg, #9f7aea, #805ad5);
   color: white;
-  padding: 6px 10px;
+  padding: 8px 12px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .back-button .icon {
-  width: 24px;
-  height: 24px;
+  width: 20px;
+  height: 20px;
   cursor: pointer;
   color: white;
 }
 
 .room-info {
-  margin-left: 8px;
+  margin-left: 5px;
   flex: 1;
 }
 
 .room-title {
-  font-weight: 500;
-  font-size: 18px;
+  font-weight: 600;
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
 }
 
 .room-members {
-  font-size: 13px;
+  font-size: 11px;
   color: #f3ebfc;
+  margin: 0;
+  padding: 0;
 }
 
 .header-actions {
   display: flex;
-  gap: 10px;
+  gap: 8px;
 }
 
 .header-actions .icon {
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   cursor: pointer;
 }
 
@@ -267,8 +276,11 @@ const sendMessage = () => {
 .chat-body {
   flex: 1;
   overflow-y: auto;
-  padding: 12px;
-  background-color: #f8f8fc;
+  padding: 8px 10px;
+  background-color: #f8f5ff;
+  background-image: linear-gradient(rgba(159, 122, 234, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(159, 122, 234, 0.05) 1px, transparent 1px);
+  background-size: 20px 20px;
   display: flex;
   flex-direction: column;
   /* 隐藏滚动条 */
@@ -284,7 +296,7 @@ const sendMessage = () => {
 }
 
 .message-wrapper {
-  margin-bottom: 16px;
+  margin-bottom: 10px;
 }
 
 .message-container {
@@ -292,108 +304,64 @@ const sendMessage = () => {
   align-items: flex-start;
 }
 
-.user-avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
 .message-content-wrapper {
-  margin-left: 8px;
+  margin-left: 6px;
   flex: 1;
+  max-width: calc(100% - 36px);
 }
 
 .message-header {
   display: flex;
   align-items: center;
-  margin-bottom: 2px;
+  margin-bottom: 1px;
 }
 
 .user-name {
   font-weight: 600;
-  font-size: 14px;
+  font-size: 12px;
   display: flex;
   align-items: center;
-}
-
-.entj-name {
-  color: #3182ce;
-}
-
-.infp-name {
-  color: #9f7aea;
-}
-
-.estp-name {
-  color: #ed8936;
-}
-
-.intj-name {
-  color: #1a202c;
-}
-
-.esfj-name {
-  color: #f56565;
+  margin: 0;
 }
 
 .mbti-emoji {
-  margin-left: 4px;
-  font-size: 16px;
+  margin-left: 3px;
+  font-size: 14px;
 }
 
 .message-time {
-  font-size: 12px;
+  font-size: 10px;
   color: #a0aec0;
-  margin-left: 8px;
+  margin-left: 5px;
 }
 
 .message-status {
-  font-size: 12px;
+  font-size: 10px;
   color: #718096;
-  margin-left: 6px;
+  margin-left: 4px;
   font-style: italic;
 }
 
 .banned-status {
-  font-size: 11px;
+  font-size: 9px;
   background-color: #f56565;
   color: white;
-  padding: 1px 4px;
-  border-radius: 4px;
-  margin-left: 6px;
+  padding: 1px 3px;
+  border-radius: 3px;
+  margin-left: 4px;
 }
 
 .message-bubble {
-  padding: 10px 14px;
-  border-radius: 12px;
+  padding: 8px 10px;
+  border-radius: 10px;
   border-top-left-radius: 0;
-  max-width: 85%;
+  max-width: 95%;
   color: white;
-  font-size: 15px;
+  font-size: 13px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-  margin-top: 4px;
+  margin-top: 2px;
   animation: fadeIn 0.3s ease;
-}
-
-.entj-bubble {
-  background: linear-gradient(to right, #3182ce, #2b6cb0);
-}
-
-.infp-bubble {
-  background: linear-gradient(to right, #9f7aea, #805ad5);
-}
-
-.estp-bubble {
-  background: linear-gradient(to right, #ed8936, #dd6b20);
-}
-
-.intj-bubble {
-  background: linear-gradient(to right, #1a202c, #2d3748);
-}
-
-.esfj-bubble {
-  background: linear-gradient(to right, #f56565, #e53e3e);
+  line-height: 1.4;
 }
 
 .revoked {
@@ -402,95 +370,34 @@ const sendMessage = () => {
 
 .attachment {
   background-color: rgba(255, 255, 255, 0.2);
-  border-radius: 8px;
-  padding: 6px 10px;
-  margin-top: 6px;
+  border-radius: 6px;
+  padding: 4px 8px;
+  margin-top: 4px;
   display: flex;
   align-items: center;
 }
 
 .attachment-icon {
-  width: 16px;
-  height: 16px;
-  margin-right: 8px;
+  width: 14px;
+  height: 14px;
+  margin-right: 6px;
   filter: invert(100%);
 }
 
 .attachment-text {
-  font-size: 13px;
+  font-size: 11px;
 }
 
-/* 底部输入区域样式 */
-.chat-footer {
-  background-color: white;
-  border-top: 1px solid #e2e8f0;
-  padding: 10px 16px 16px 16px;
-  position: sticky;
-  bottom: 0;
+.user-mention {
+  color: #ffeb3b;
+  font-weight: bold;
 }
 
-.input-tools {
-  display: flex;
-  margin-bottom: 12px;
-}
-
-.tool-icon {
-  width: 24px;
-  height: 24px;
-  margin-right: 16px;
-  color: #718096;
-  cursor: pointer;
-  transition: color 0.2s;
-}
-
-.tool-icon:hover {
-  color: #4a5568;
-}
-
-.input-area {
-  display: flex;
-  align-items: center;
-  background-color: #f1f1f4;
-  border-radius: 24px;
-  padding: 4px 8px 4px 16px;
-}
-
-.message-input {
-  flex: 1;
-  padding: 10px 0;
-  border: none;
-  border-radius: 99px;
-  outline: none;
-  background-color: transparent;
-  font-size: 15px;
-}
-
-.send-button {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-color: #9f7aea;
-  border: none;
-  margin-left: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.send-button:hover {
-  background-color: #805ad5;
-}
-
-.send-icon {
-  color: white;
-}
-
+/* 动画 */
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(5px);
   }
 
   to {
@@ -499,8 +406,8 @@ const sendMessage = () => {
   }
 }
 
-/* 深化绿色 */
-.green-bg {
-  background: linear-gradient(135deg, #276749, #48bb78);
-}
+/* 底部输入区域样式 - 保留但注释掉 */
+
+/* 自定义气泡背景颜色 */
+/* 使用 style 绑定在组件中动态应用这些渐变 */
 </style>

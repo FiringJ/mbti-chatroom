@@ -70,9 +70,9 @@ const getAvatarUrl = () => {
 
 <style scoped>
 .mbti-avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 8px;
+  width: 30px;
+  height: 30px;
+  border-radius: 6px;
   overflow: hidden;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: flex;
